@@ -1,0 +1,63 @@
+#headerBox {
+  text-align: center;
+  font-size: 50px;
+
+  border-bottom: solid black;
+}
+
+.boardContainer {
+  display: flex;
+  justify-content: center;
+
+  background-color: turquoise;
+
+}
+  #todoHeader {
+    width: 25%;
+    height: 760px;
+    text-align: center;
+    font-size: 40px;
+
+    background-color: gray;
+    border-left: solid black;
+    border-right: solid black;
+    border-width: 5px;
+  }
+
+  #todo {
+    font-size: 15px;
+    border: solid black;
+  }
+
+  #in-progressHeader {
+    width: 25%;
+    height: 760px;
+    text-align: center;
+    font-size: 40px;
+
+    background-color: gray;
+    border-right: solid black;
+    border-width: 5px;
+  }
+
+  #in-progress {
+    font-size: 15px;
+    border: solid black;
+  }
+
+  #doneHeader {
+    width: 25%;
+    height: 760px;
+    text-align: center;
+    font-size: 40px;
+
+    background-color: gray;
+    border-right: solid black;
+    border width: 5px;
+  }
+
+  #done {
+    font-size: 15px;
+    border: solid black;
+  }
+
