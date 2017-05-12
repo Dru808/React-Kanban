@@ -54,13 +54,16 @@ const getCardsFromFakeXHR = () => new Promise((resolve, reject) => {
 });
 
 const Card = (props) => (
-  <li class="card">
+  <li className="card">
     <h3>{props.card.title}</h3>
     <p>Id: {props.card.card_id}</p>
     <p>Priority: {props.card.priority}</p>
     <p>Status: {props.card.status}</p>
     <p>Created by: {props.card.created_by}</p>
     <p>Assigned to: {props.card.assigned_to}</p>
+    <button onClick={props.cardInProgressClick(props.card)}>move to in progress</button>
+    <button>move to done</button>
+    <button>move to todo</button>
   </li>
   );
 
@@ -74,19 +77,17 @@ const CardSearchFilter = filter =>
       createdBy.toLowerCase().indexOf(filter.toLowerCase()) >= 0 ||
       assignedTo.toLowerCase().indexOf(filter.toLowerCase()) >= 0;
 
-const CardList = ({ cards, filter }) => (
+const CardList = ({ cards, customClassName, moveToProgress, cardInProgressClick }) => (
 
-  <ul id="test">
+  <ul id="test" className={customClassName}>
     {cards
-      .filter((el) => {
-        return el.status === filter;
-      })
       .map(cardObj => {
         console.log('obj ', cardObj);
-       return <Card card={cardObj} />
+       return <Card card={cardObj} cardInProgressClick={cardInProgressClick} />
       })
 
       }
+
   </ul>
 
 );
@@ -231,9 +232,48 @@ class App extends React.Component{
     });
   }
 
+  cardInProgressClick(card){
+    return (e) => {
+      console.log(card);
+    }
+  }
+
   render(){
+
+    const todoCards = this.state.cards.filter((currEl) => {
+      return currEl.status === 'todo'
+    })
+
+    const inProgressCards = this.state.cards.filter((currEl) => {
+      return currEl.status === 'in progress'
+    })
+
+    const doneCards = this.state.cards.filter((currEl) => {
+      return currEl.status === 'done'
+    })
+
+
     return (
-      <div>
+      <div className="boardContainer">
+        <CardList
+          cards={todoCards}
+          customClassName="todo"
+          moveToProgress="in progress"
+          cardInProgressClick={this.cardInProgressClick}
+
+        />
+
+        <CardList
+          cards={inProgressCards}
+          customClassName="in-progress"
+
+        />
+
+        <CardList
+          cards={doneCards}
+          customClassName="done"
+          moveToProgress="in progress"
+        />
 
         <NewCardForm addCard={this.addCard}/>
       </div>
@@ -251,212 +291,3 @@ ReactDOM.render(
   reactContainer
 );
 
-class App2 extends React.Component{
-
-  constructor(props){
-    super(props);
-
-    this.state = {
-      cards : []
-    };
-
-
-    this.addCard = this.addCard.bind(this);
-
-  }
-
-  componentDidMount() {
-    this.getCards().then( cards => {
-      this.setState({ cards });
-    });
-  }
-
-  getCards(){
-    return getCardsFromFakeXHR();
-  }
-
-  setFilter(e){
-    // console.log(e.target.value);
-    this.setState({ filter : e.target.value });
-  }
-
-  addCard(card){
-    this.setState({
-      cards : this.state.cards.concat(card)
-    });
-  }
-
-  render(){
-    return (
-      <div>
-        <CardList
-          cards={this.state.cards}
-          filter='todo'
-        />
-      </div>
-
-
-        // <CardList
-        //   cards={this.state.cards}
-        //   filter='in progress'
-        // />
-
-
-        // <CardList
-        //   cards={this.state.cards}
-        //   filter='done'
-        // />
-
-    );
-  }
-};
-
-ReactDOM.render(
-  // component to render
-  <App2 />,
-
-  // where to inject this component
-  // dom element, or use getElementById
-  reactContainer2
-);
-
-class App3 extends React.Component{
-
-  constructor(props){
-    super(props);
-
-    this.state = {
-      cards : []
-    };
-
-
-    this.addCard = this.addCard.bind(this);
-
-  }
-
-  componentDidMount() {
-    this.getCards().then( cards => {
-      this.setState({ cards });
-    });
-  }
-
-  getCards(){
-    return getCardsFromFakeXHR();
-  }
-
-  setFilter(e){
-    // console.log(e.target.value);
-    this.setState({ filter : e.target.value });
-  }
-
-  addCard(card){
-    this.setState({
-      cards : this.state.cards.concat(card)
-    });
-  }
-
-  render(){
-
-    return (
-      <div>
-
-
-        <CardList
-          cards={this.state.cards}
-          filter='in progress'
-        />
-
-      </div>
-
-        // <CardList
-        //   cards={this.state.cards}
-        //   filter='todo'
-        //   class='todoBox'
-        // />
-        // <CardList
-        //   cards={this.state.cards}
-        //   filter='done'
-        // />
-
-    );
-  }
-};
-
-ReactDOM.render(
-  // component to render
-  <App3 />,
-
-  // where to inject this component
-  // dom element, or use getElementById
-  reactContainer3
-);
-
-class App4 extends React.Component{
-
-  constructor(props){
-    super(props);
-
-    this.state = {
-      cards : []
-    };
-
-
-    this.addCard = this.addCard.bind(this);
-
-  }
-
-  componentDidMount() {
-    this.getCards().then( cards => {
-      this.setState({ cards });
-    });
-  }
-
-  getCards(){
-    return getCardsFromFakeXHR();
-  }
-
-  setFilter(e){
-    // console.log(e.target.value);
-    this.setState({ filter : e.target.value });
-  }
-
-  addCard(card){
-    this.setState({
-      cards : this.state.cards.concat(card)
-    });
-  }
-
-  render(){
-    return (
-      <div>
-
-
-        <CardList
-          cards={this.state.cards}
-          filter='done'
-        />
-
-      </div>
-        // <CardList
-        //   cards={this.state.cards}
-        //   filter='todo'
-        //   class='todoBox'
-        // />
-
-
-        // <CardList
-        //   cards={this.state.cards}
-        //   filter='in progress'
-        // />
-    );
-  }
-};
-
-ReactDOM.render(
-  // component to render
-  <App4 />,
-
-  // where to inject this component
-  // dom element, or use getElementById
-  reactContainer4
-);

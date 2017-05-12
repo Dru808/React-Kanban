@@ -24,12 +24,13 @@
     border-width: 5px;
   }
 
-  #todo {
+  .todo {
     font-size: 15px;
     border: solid black;
+    background-color: green;
   }
 
-  #in-progressHeader {
+  .in-progressHeader {
     width: 25%;
     height: 760px;
     text-align: center;
@@ -40,9 +41,10 @@
     border-width: 5px;
   }
 
-  #in-progress {
+  .in-progress {
     font-size: 15px;
     border: solid black;
+    background-color: yellow;
   }
 
   #doneHeader {
@@ -56,8 +58,18 @@
     border width: 5px;
   }
 
-  #done {
+  .done {
     font-size: 15px;
     border: solid black;
+    background-color: blue;
+  }
+
+  .card {
+    border: solid black;
+    border-width: 5px;
+    padding: 5px;
+    padding-left: 25px;
+    padding-right: 25px;
+    margin: 2px;
   }
 
